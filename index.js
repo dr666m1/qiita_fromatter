@@ -29,7 +29,7 @@ function printSQL(path, options, print) {
   }
   switch (node.type) {
     default:
-      return concat([node.value.toString(), node.as ? ` AS ${node.as}` : ""]);
+      return ""
   }
 }
 
