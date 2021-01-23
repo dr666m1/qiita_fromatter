@@ -27,9 +27,27 @@ function printSQL(path, options, print) {
   if (Array.isArray(node)) {
     return concat(path.map(print));
   }
+  if (node.expr) {
+    return path.call(print, "expr");
+  }
   switch (node.type) {
+    case "select":
+      return concat([
+        "SELECT",
+        indent(
+          concat([
+            hardline,
+            join(concat([hardline, ","]), path.map(print, "columns")),
+          ])
+        ),
+        hardline,
+        "FROM",
+        indent(concat(node.from.map((x) => concat([hardline, x.table])))),
+      ]);
+    case "column_ref":
+      return node.column;
     default:
-      return ""
+      return "";
   }
 }
 
